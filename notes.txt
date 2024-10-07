@@ -1,0 +1,7 @@
+Directive  for today: 
+v-text - used for text
+v-bind - used for connecting data. 
+v-html - used any html that you want to HTML tag.
+Mustache Syntax - this is the  curly double brackets when you want to parse data. remember this is not a directive.
+
+

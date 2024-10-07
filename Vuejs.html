@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>After school club</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <main>
+        <div v-if="showProduct">
+          <header>
+            <button id="checkout" v-on:click="showCheckOut">
+              {{ cartItemCount }}
+              <span class="fas fa-cart-plus">checkout</span>
+            </button>
+          </header>
+          <h1 v-text="name"></h1>
+          <figure>
+            <img :src="product.image" alt="" />
+          </figure>
+          <h2 v-text="product.subject"></h2>
+          <p v-text="product.Location"></p>
+          <p>Price: {{product.Price}}</p>
+          <button v-on:click="addToCard" v-if="canAddToCart">addToCard</button>
+          <button disabled="disabled" v-else>addToCard</button>
+        </div>
+        <div v-else>
+          <h1>CheckOut</h1>
+        </div>
+      </main>
+    </div>
+
+    <script type="text/javascript">
+      const subject = new Vue({
+        el: "#app",
+        data: {
+          name: "After school Club",
+          showProduct: true,
+          product: {
+            id: 1001,
+            subject: "Math",
+            Location: "London",
+            Price: 100,
+            image: "images/mathIcon.png",
+            availableInventory: 5,
+          },
+          cart: [],
+        },
+        methods: {
+          addToCard: function () {
+            this.cart.push(this.product.id);
+          },
+          showCheckOut: function () {
+            this.showProduct = this.showProduct ? false : true;
+          },
+        },
+        computed: {
+          cartItemCount: function () {
+            return this.cart.length || "";
+          },
+          canAddToCart: function () {
+            return this.product.availableInventory > this.cart.length;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

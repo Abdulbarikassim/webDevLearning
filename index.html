@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <title>Pet Depot</title>
+    <style>
+      #checkout {
+        background-color: green;
+        border: none;
+        border-radius: 12px;
+        color: white;
+        padding: 12px;
+        text-align: right;
+        margin: auto;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <main>
+        <div v-if="showProduct">
+          <header>
+            <h1 v-text="sitename"></h1>
+            <hr />
+            <button v-on:click="showCheckOut">
+              {{countItems}} <span class="fas fa-cart-plus">checkout</span>
+            </button>
+          </header>
+          <figure>
+            <img :src="product.image" alt="cat" width="200px" />
+
+            <h2 v-text="product.title"></h2>
+            <p v-html="product.description"></p>
+            <p v-text="product.price"></p>
+            <button v-on:click="addToCart" v-if="canAddToCard">
+              addToCart
+            </button>
+            <button disabled="disabled" v-else>fuck You</button>
+          </figure>
+        </div>
+
+        <div v-else>
+          <h1>CheckOut</h1>
+        </div>
+      </main>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: "#app",
+        data: {
+          sitename: "Vue.js Pet Depot",
+          showProduct: true,
+
+          product: {
+            id: 1001,
+            title: "Cat Food, 25lb bag",
+            description:
+              "A 25 pound bag of <em> irresistible</em> " +
+              "organic goodness for you cat",
+            price: 2000,
+            image: "images/product-fullsize.jpeg",
+            spot: 5,
+          },
+          cart: [],
+        },
+
+        methods: {
+          addToCart: function () {
+            return this.cart.push(this.product.id);
+          },
+          showCheckOut: function () {
+            this.showProduct = this.showProduct ? false : true;
+          },
+        },
+
+        computed: {
+          countItems: function () {
+            return this.cart.length || "";
+          },
+          canAddToCard: function () {
+            return this.product.spot > this.countItems;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
